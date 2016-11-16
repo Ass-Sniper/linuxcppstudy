@@ -1,0 +1,43 @@
+*** stack smashing detected ***: /home/super/Desktop/practices/linuxc/tmore/more1 terminated
+
+Program received signal SIGABRT, Aborted.
+0xb7fdccf9 in ?? ()
+(gdb) bt
+#0  0xb7fdccf9 in ?? ()
+#1  0xb7f01b8b in __GI___fortify_fail (msg=<optimized out>, msg@entry=0xb7f69443 "stack smashing detected")
+    at fortify_fail.c:38
+#2  0xb7f01b1a in __stack_chk_fail () at stack_chk_fail.c:28
+#3  0x0804870c in do_more (fp=0x804b008) at more1.c:58
+#4  0x0a7b294c in ?? ()
+#5  0x20776500 in ?? ()
+#6  0x63657073 in ?? ()
+#7  0x206c6169 in ?? ()
+#8  0x6d6d6f63 in ?? ()
+#9  0x73646e61 in ?? ()
+#10 0xb7ff000a in _dl_scope_free (old=0xbfffeef0) at dl-scope.c:53
+#11 0xbfffeee8 in ?? ()
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+----------------------------------------------------------------------------------------------
+Reason & solution: buffer overflow
+
+void do_more(FILE *fp) 
+{
+	char buffer[PAGELEN]; // error input: PAGELEN should be replaced with LINELEN
+	int num_of_lines = 0;
+	int reply;
+
+	while(fgets(buffer, LINELEN, fp)) {
+		if (num_of_lines == PAGELEN) {
+			reply = see_more();
+			if (reply == 0) {
+				break;
+			}
+			num_of_lines -= reply; /*reset count*/
+		}
+		if (fputs(buffer, stdout) == EOF) {
+			exit(1);
+		}
+		num_of_lines++;
+	}
+
+}

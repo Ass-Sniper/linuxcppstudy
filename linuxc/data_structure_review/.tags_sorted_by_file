@@ -1,0 +1,36 @@
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+BIN	Makefile	/^BIN=linkedlist$/;"	m
+BIN_OBJ	Makefile	/^BIN_OBJ=$(patsubst %.c,%.o,$(BIN_SRC))$/;"	m
+BIN_SRC	Makefile	/^BIN_SRC=$(wildcard linkedlist.c)$/;"	m
+CC	Makefile	/^CC=gcc$/;"	m
+INCPATH	Makefile	/^INCPATH=$/;"	m
+LIB	Makefile	/^LIB=$/;"	m
+LIB_OBJ	Makefile	/^LIB_OBJ=$/;"	m
+LIB_SRC	Makefile	/^LIB_SRC=$/;"	m
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+ERR_EXIT	linkedlist.c	8;"	d	file:
+appendElement	linkedlist.c	/^bool appendElement(lnode *head_ref, int const new_data)$/;"	f
+createlinkedlist	linkedlist.c	/^lnode* createlinkedlist()$/;"	f
+data	linkedlist.c	/^    int data; \/\/ if node is head node, this field represents list's count.$/;"	m	struct:linkedListNode	file:
+deleteElement	linkedlist.c	/^bool deleteElement(lnode *head_ref, int const value)$/;"	f
+deleteList	linkedlist.c	/^int deleteList(lnode *head_ref)$/;"	f
+findElement	linkedlist.c	/^lnode* findElement(lnode const *head_ref, int const value, uint *index)$/;"	f
+getPrev	linkedlist.c	/^lnode* getPrev(lnode *head_ref, lnode *node)$/;"	f
+getTail	linkedlist.c	/^lnode* getTail(lnode *head_ref)$/;"	f
+insertAfter	linkedlist.c	/^bool insertAfter(lnode *head_ref, int const after, int const new_data)$/;"	f
+insertBefore	linkedlist.c	/^bool insertBefore(lnode *head_ref, int const before, int const new_data)$/;"	f
+linkedListNode	linkedlist.c	/^typedef struct linkedListNode {$/;"	s	file:
+lnode	linkedlist.c	/^} lnode;$/;"	t	typeref:struct:linkedListNode	file:
+main	linkedlist.c	/^int main(int argc, char const *argv[])$/;"	f
+newNode	linkedlist.c	/^lnode* newNode(int const new_data)$/;"	f
+pnext	linkedlist.c	/^    struct linkedListNode *pnext;$/;"	m	struct:linkedListNode	typeref:struct:linkedListNode::linkedListNode	file:
+printAllElements	linkedlist.c	/^void printAllElements(lnode const *head_ref)$/;"	f
+printByGraphic	linkedlist.c	/^void printByGraphic(lnode const *head_ref)$/;"	f
+setElement	linkedlist.c	/^void setElement(lnode const *head_ref, int const value)$/;"	f
+sortList	linkedlist.c	/^void sortList(lnode *head_ref)$/;"	f
+swap	linkedlist.c	/^void swap(int *left, int *right) $/;"	f
+uint	linkedlist.c	/^typedef uint32_t uint;$/;"	t	file:

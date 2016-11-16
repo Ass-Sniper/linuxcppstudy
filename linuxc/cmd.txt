@@ -1,0 +1,50 @@
+gcc -Wall -g linkedlist.c -o linkedlist
+
+objdump -p ./linkedlist | grep NEEDED
+
+ldd -v linkedlist
+
+readelf -l linkedlist | grep interpreterd
+
+
+-------------------------------------------------
+ulimit -c unlimited
+
+sudo su
+
+echo "1" > /proc/sys/kernel/core_uses_pid
+
+echo "core.%p.%t" > /proc/sys/kernel/core_pattern
+
+/proc/sys/kernel/core/core_pattern 默认内容:
+|/usr/libexec/abrt-hook-ccpp %s %c %p %u %g %t e
+
+方法1：临时修改：修改/proc/sys/kernel/core_pattern文件，但/proc目录本身是动态加载的，每次系统重启都会重新加载，因此这种方法只能作为临时修改。
+/proc/sys/kernel/core_pattern
+例：echo ‘/var/log/%e.core.%p’ > /proc/sys/kernel/core_pattern
+
+方法2：永久修改：可以通过在/etc/sysctl.conf文件中，对sysctl变量kernel.core_pattern的设置。
+#vi /etc/sysctl.conf 然后，在sysctl.conf文件中添加下面两句话：
+kernel.core_pattern = /var/core/core_%e_%p
+kernel.core_uses_pid = 0
+保存后退出。
+需要说明的是， /proc/sys/kernel/core_uses_pid。如果这个文件的内容被配置成1，即使core_pattern中没有设置%p，最后生成的core dump文件名仍会加上进程ID。
+可以使用以下命令，使修改结果马上生效。
+$ sudo sysctl -p /etc/sysctl.conf
+
+-------------------------------------------------
+
+cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ~/Desktop/practices/linuxcppstudy/demo_test
+
+-----------------------
+valgrind --leak-check=full
+
+------------------------
+gdb --core=core.6257.1478163668
+
+gdb>file 可执行文件名称（不带后缀）
+
+gdb>bt(backtrace)
+
+
+
