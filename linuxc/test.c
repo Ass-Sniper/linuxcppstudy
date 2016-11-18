@@ -19,6 +19,10 @@ void poke(int *z)
 	*q = 42;　//Program will invoke signal SIGSEGV, Segmentation fault.
 }
 */
+struct empty_struct
+{
+	
+};
 
 int main(void)
 {
@@ -53,6 +57,8 @@ int main(void)
 /*	printf("sizeof('a')  = %d\n", sizeof('a')); // 32-bit:4
 	printf("sizeof(char) = %d\n", sizeof(char));// 32-bit:1
 	printf("sizeof(int)  = %d\n", sizeof(int)); // 32-bit:4*/
+
+	printf("sizeof(struct empty_struct) = %d\n", sizeof(struct empty_struct)); // output: 0
 
 	return 0;
 }

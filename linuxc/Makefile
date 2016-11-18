@@ -6,7 +6,7 @@ LIB=
 LIB_SRC=
 LIB_OBJ=
 
-BIN=test
+BIN=testbin
 BIN_SRC=$(wildcard test.c)
 BIN_OBJ=$(patsubst %.c,%.o,$(BIN_SRC))
 
