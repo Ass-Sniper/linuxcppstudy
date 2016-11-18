@@ -6,7 +6,7 @@ LIB=
 LIB_SRC=
 LIB_OBJ=
 
-BIN=maxsum
+BIN=testbin
 BIN_SRC=$(wildcard test.cpp)
 BIN_OBJ=$(patsubst %.cpp,%.o,$(BIN_SRC))
 

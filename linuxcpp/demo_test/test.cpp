@@ -21,159 +21,84 @@
 // 	return 0;
 // }
 
-/*
-第一步：以输入数组为准，计算其任意的由连续元素组成的序列的和的集合
-第二步：计算上述集合中的最大值
-*/
-
 using namespace std;
 
-typedef unsigned int uint;
+// typedef unsigned int uint;
 
-// Cubic maximum contiguous subsequence sum algorithm.
-// seqstart and seqEnd represent the actual best sequence.
-// O(N*N*N)
-template <class Comparable>
-Comparable maxSubsequenceSum_Cubic(const vector<Comparable>& a, int & seqStart, int & seqEnd )
-{
-	int n = a.size();
-	Comparable maxSum = 0;
-
-	for ( int i = 0; i < n; i++ ) {
-
-		for ( int j = i; j < n; j++) {
-
-			Comparable thisSum = 0;
-
-			for ( int k = i; k <= j; k++)
-				thisSum += a[k];
-	
-			if ( thisSum > maxSum)
-			{
-				maxSum = thisSum;
-				seqStart = i;
-				seqEnd = j;
-			}
-		}
-	}
-	return maxSum;
-}
-
-// A quadratic maximum contiguous subsequence sum algorithm
-// O(N*N)
-template <class Comparable>
-Comparable maxSubsequenceSum_Quadratic(const vector<Comparable>& a, int & seqStart, int & seqEnd )
-{
-	int n = a.size();
-	Comparable maxSum = 0;
-
-	for ( int i = 0; i < n; i++ ) {
-
-		Comparable thisSum = 0;
+/*struct empty_struct {
 		
-		for ( int j = i; j < n; j++) {
+};
 
-			thisSum += a[j];
-	
-			if ( thisSum > maxSum)
-			{
-				maxSum = thisSum;
-				seqStart = i;
-				seqEnd = j;
-			}
-		}
-	}
-	return maxSum;
-}
+class empty_class {
 
-// A linear maximum contiguous subsequence sum algorithm
-// O(N)
-template <class Comparable>
-Comparable maxSubsequenceSum_Linear(const vector<Comparable>& a, int & seqStart, int & seqEnd )
+};
+
+//大小为0之独立（非附属）对象，通常C++官方勒令默默安插一个char到空对象内
+class int_and_empty {
+	int x;
+	empty_class ec;
+};
+
+//前面一直在强调“独立（非附属）”对象的大小一定不为0，这个约束不适用于derived class对象内的base class成分，因为它们并非独立（非附属）
+class int_derived_empty {
+	int x;
+};
+
+class empty_derived_empty {
+
+};*/
+
+
+class Empty
+{};
+ 
+class Derived1 : public Empty
+{};
+ 
+class Derived2 : virtual public Empty
+{};
+ 
+class Derived3 : public Empty
+{    
+    char c;
+};
+ 
+class Derived4 : virtual public Empty
 {
-	int n = a.size();
-	Comparable thisSum = 0;
-	Comparable maxSum = 0;
+    char c;
+};
 
-	for ( int i = 0, j = 0; j < n; j++ ) {
-
-		thisSum += a[j];
-
-		if ( thisSum > maxSum)
-		{
-			maxSum = thisSum;
-			seqStart = i;
-			seqEnd = j;
-		} else if (thisSum < 0) {
-			i = j + 1;
-			thisSum = 0;
-		}
-	}
-	return maxSum;
-}
-
-template <class Comparable>
-void printMaxContiguousSubseq(const vector<Comparable>& a, const int seqStart, const int seqEnd)
+class Derived5 : virtual public Empty
 {
-	cout<< "[";
-	for (int i = seqStart; i <= seqEnd; ++i)
-	{
-		cout<< a[i];
-		if(i < seqEnd)
-			cout<< ",";
-	}
-	cout<< "]" <<endl;
-}
-
+    int c;
+};
+ 
+class Dummy
+{
+    char c;
+};
 
 
 int main(int argc, char const *argv[])
 {
-/*	int array[] = {-2, 11 , -4 , 13, -5, 2};
 
-	int count = sizeof(array)/sizeof(array[0]);
-
-	vector<int> sequence(array, array+count);
-
-	int start = 0, end = 0 , maxSum = 0; 
-
-    clock_t startTime,finishTime;
-    double totaltime;
-
-    startTime = clock();
-    maxSum = maxSubsequenceSum_Cubic(sequence, start, end);
-    finishTime = clock();
- 	totaltime = (double)(finishTime-startTime)/CLOCKS_PER_SEC;
-   	cout<< "Cubic solution execution time:"<< fixed << totaltime << "s" <<endl;
-	cout<< "The Maximum Contiguous Subsequence Sum: " << maxSum <<endl;
-	cout<< "startIndex: " << start << ";endIndex: " << end <<endl;
-	printMaxContiguousSubseq(sequence, start, end);
-
-	cout<< "------------------------------------------" <<endl;
-
-    startTime = clock();
-    maxSum = maxSubsequenceSum_Quadratic(sequence, start, end);
-    finishTime = clock();
- 	totaltime = (double)(finishTime-startTime)/CLOCKS_PER_SEC;
-   	cout<< "Quadratic solution execution time:"<< fixed << totaltime << "s" <<endl;
-	cout<< "The Maximum Contiguous Subsequence Sum: " << maxSum <<endl;
-	cout<< "startIndex: " << start << ";endIndex: " << end <<endl;
-	printMaxContiguousSubseq(sequence, start, end);
-
-	cout<< "------------------------------------------" <<endl;
-
-    startTime = clock();
-    maxSum = maxSubsequenceSum_Linear(sequence, start, end);
-    finishTime = clock();
- 	totaltime = (double)(finishTime-startTime)/CLOCKS_PER_SEC;
-   	cout<< "Linear solution execution time:"<< fixed << totaltime << "s" <<endl;
-	cout<< "The Maximum Contiguous Subsequence Sum: " << maxSum <<endl;
-	cout<< "startIndex: " << start << ";endIndex: " << end <<endl;
-	printMaxContiguousSubseq(sequence, start, end);	*/
-
-	cout<< "sizeof('a')  = " << sizeof('a') << endl;  // 32-bit: 1;
+/*	cout<< "sizeof('a')  = " << sizeof('a') << endl;  // 32-bit: 1;
 	cout<< "sizeof(char) = " << sizeof(char) << endl; // 32-bit: 1;
 	cout<< "sizeof(int)  = " << sizeof(int) << endl;  // 32-bit: 4;
+
+	cout<< "sizeof(struct empty_struct) = " << sizeof(empty_struct) <<endl;	// 1
+	cout<< "sizeof(class  empty_class)  = " << sizeof(empty_class) <<endl;	// 1
+	cout<< "sizeof(class  int_and_empty)  = " << sizeof(int_and_empty) <<endl;	// 8
+	cout<< "sizeof(class  int_derived_empty)  = " << sizeof(int_derived_empty) <<endl;	// 4
+	cout<< "sizeof(class  empty_derived_empty)  = " << sizeof(empty_derived_empty) <<endl;	// 1*/
+
+    cout << "sizeof(Empty) " << sizeof(Empty) << endl;		// 1
+    cout << "sizeof(Derived1) " << sizeof(Derived1) << endl;// 1
+    cout << "sizeof(Derived2) " << sizeof(Derived2) << endl;// 4 = vptr
+    cout << "sizeof(Derived3) " << sizeof(Derived3) << endl;// 1
+    cout << "sizeof(Derived4) " << sizeof(Derived4) << endl;// 8 = vptr + memory_align
+    cout << "sizeof(Derived5) " << sizeof(Derived5) << endl;// 8   
+    cout << "sizeof(Dummy) " << sizeof(Dummy) << endl;		// 1
 
 	return 0;
 }
