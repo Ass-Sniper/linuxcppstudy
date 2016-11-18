@@ -1,0 +1,5 @@
+Description:Address already in use
+
+Reason & Solution:
+sudo rm /tmp/mysocket
+--------------------------------------------
