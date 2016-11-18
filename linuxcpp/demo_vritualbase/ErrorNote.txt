@@ -1,0 +1,22 @@
+Details:
+virtualbase.o: In function `A::A()':
+/home/super/Desktop/practices/linuxstudy/linuxcpp/demo_vritualbase/virtualbase.cpp:44: undefined reference to `vtable for A'
+virtualbase.o: In function `B::~B()':
+/home/super/Desktop/practices/linuxstudy/linuxcpp/demo_vritualbase/virtualbase.cpp:50: undefined reference to `A::~A()'
+virtualbase.o: In function `B::~B()':
+/home/super/Desktop/practices/linuxstudy/linuxcpp/demo_vritualbase/virtualbase.cpp:50: undefined reference to `A::~A()'
+virtualbase.o: In function `C::~C()':
+/home/super/Desktop/practices/linuxstudy/linuxcpp/demo_vritualbase/virtualbase.cpp:55: undefined reference to `A::~A()'
+/home/super/Desktop/practices/linuxstudy/linuxcpp/demo_vritualbase/virtualbase.cpp:55: undefined reference to `A::~A()'
+virtualbase.o: In function `C::~C()':
+/home/super/Desktop/practices/linuxstudy/linuxcpp/demo_vritualbase/virtualbase.cpp:55: undefined reference to `A::~A()'
+virtualbase.o:/home/super/Desktop/practices/linuxstudy/linuxcpp/demo_vritualbase/virtualbase.cpp:55: more undefined references to `A::~A()' follow
+virtualbase.o:(.rodata._ZTI1D[_ZTI1D]+0x18): undefined reference to `typeinfo for A'
+virtualbase.o:(.rodata._ZTI1B[_ZTI1B]+0x10): undefined reference to `typeinfo for A'
+collect2: error: ld returned 1 exit status
+make: *** [virtualbase] Error 1
+
+Reason && Solution:
+
+Reason: base class contains virtual function, but I forgot to add its default implemtation
+Soultion: Adding default implemtation for base class virtual function
