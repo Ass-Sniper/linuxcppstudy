@@ -1,3 +1,8 @@
+/**
+ *	Singly Linked List
+ *	Copyright (c) 2016-2018 Ass-Sniper
+ *	All rights reserved.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -28,13 +33,13 @@ lnode* createlinkedlist()
     head = (lnode *)malloc(sizeof(lnode));
     head->data = 0;
     head->pnext = NULL;
-    printf("---singly linked list has been created successfully---\n");   
+    // printf("---singly linked list has been created successfully---\n");   
     return head;	
 }
 
 // Release each node in list from head to tail on by one.
 // @param head_ref is the target which is to be released.
-int deleteList(lnode *head_ref)
+int destroyList(lnode *head_ref)
 {
 	uint cnt = 0;
 	lnode *currhead, *temp;
@@ -46,7 +51,7 @@ int deleteList(lnode *head_ref)
 	    currhead = temp;
 	}
 	head_ref = NULL; // head node's memory has been released, but its contents has not been cleared yet.
-    printf("---[%d] node%s that %s head node had been released---\n", cnt, (cnt<=1)?"":"s", (cnt<=1)?"is":"contain");
+    // printf("---[%d] node%s that %s head node had been released---\n", cnt, (cnt<=1)?"":"s", (cnt<=1)?"is":"contain");
     return cnt;
 }
 
@@ -74,7 +79,7 @@ void swap(int *left, int *right)
 	*left  = *left - *right; // a = a-(a-b)
 }
 
-void printAllElements(lnode const *head_ref)
+void printDetails(lnode const *head_ref)
 {
 	lnode const *worker = NULL;
 	uint i = 1;
@@ -85,7 +90,7 @@ void printAllElements(lnode const *head_ref)
 	}
 	worker = head_ref->pnext;
 	// printf("list head at: %p\n", head_ref);
-	while(worker && (i <= UINT_MAX)) {
+	while(worker) {
 		printf("element[%d] at [%p]---[data]: %d\t---[pnext]: %p\n", i, worker, worker->data, worker->pnext);
 		i++;
 		worker = worker->pnext;
@@ -93,7 +98,7 @@ void printAllElements(lnode const *head_ref)
 
 }
 
-void printByGraphic(lnode const *head_ref)
+void printBrief(lnode const *head_ref)
 {
 	lnode const *worker = NULL;
 	uint i = 1;
@@ -105,7 +110,7 @@ void printByGraphic(lnode const *head_ref)
 	worker = head_ref->pnext;
 	// printf("[head:%d;%p]->", head_ref->data, head_ref->pnext);
 	printf("[head:%d]->", head_ref->data);	
-	while(worker && (i <= UINT_MAX)) {
+	while(worker) {
 		// printf("[node:%d;%p]", worker->data, worker->pnext);
 		printf("[node:%d]", worker->data);
 		if(worker->pnext) {
@@ -116,28 +121,6 @@ void printByGraphic(lnode const *head_ref)
 		if((i%6 == 0) || (!worker)) {
 			printf("\n");
 		}
-	}
-}
-
-void sortList(lnode *head_ref)
-{
-	lnode *left = NULL, *right = NULL;
-	left = head_ref->pnext;
-	right = left->pnext;
-	// printByGraphic(head_ref);
-	while(left) {
-		while(right) {
-				// printf("[currleft]:%d —— [currright]:%d\n", left->data, right->data);
-			if(right->data > left->data) {
-				// printf("[left]:%d <——> [right]:%d\n", left->data, right->data);
-				// swap((int *)&(left->data), (int *)&(right->data));
-				swap(&(left->data), &(right->data));
-			}
-					// printByGraphic(head_ref);
-			right = right->pnext;
-		}	
-	   	right = head_ref->pnext;
-	   	left = left->pnext;
 	}
 }
 
@@ -159,6 +142,28 @@ lnode* getPrev(lnode *head_ref, lnode *node)
 		worker = worker->pnext;
 	}
 	return worker;
+}
+
+void sortList(lnode *head_ref)
+{
+	lnode *left = NULL, *right = NULL;
+	left = head_ref->pnext;
+	right = left->pnext;
+	// printBrief(head_ref);
+	while(left) {
+		while(right) {
+				// printf("[currleft]:%d —— [currright]:%d\n", left->data, right->data);
+			if(right->data > left->data) {
+				// printf("[left]:%d <——> [right]:%d\n", left->data, right->data);
+				// swap((int *)&(left->data), (int *)&(right->data));
+				swap(&(left->data), &(right->data));
+			}
+					// printBrief(head_ref);
+			right = right->pnext;
+		}	
+	   	right = head_ref->pnext;
+	   	left = left->pnext;
+	}
 }
 
 // Copy all nodes in head_from to head_to's tail on by one
@@ -183,7 +188,7 @@ void copyList(lnode const *head_from, lnode **head_to)
 }
 
 // Concatenate result: head_to->head_from
-void concatList(lnode **head_from, lnode **head_to)
+void concat(lnode **head_from, lnode **head_to)
 {
 	if(NULL == *head_from) {
 		return;
@@ -200,10 +205,11 @@ void concatList(lnode **head_from, lnode **head_to)
 	(*head_from)->data = 0;
 }
 
-// Search first match node and return that node
-// @head_ref list is to be searched
-// @vlaue value is to be found
-lnode* findElement(lnode const *head_ref, int const value, uint *index)
+/*	Search first match node and return that node
+	@head_ref list is to be searched
+	@vlaue value is to be found
+ */
+lnode* locate(lnode const *head_ref, int const value, uint *index)
 {
 	lnode *worker = NULL;
 	uint i = 2;
@@ -213,7 +219,7 @@ lnode* findElement(lnode const *head_ref, int const value, uint *index)
 		return worker;
 	}
 	worker = head_ref->pnext;
-	while(worker && (i <= UINT_MAX)) {
+	while(worker) {
 		if(worker->data == value) {
 			*index = i;
 			break;			
@@ -224,22 +230,8 @@ lnode* findElement(lnode const *head_ref, int const value, uint *index)
 	return ((i >= 2) ? worker: NULL);
 }
 
-// Find first match node which data equals to oldvalue and change its data to newvalue
-void setElement(lnode const *head_ref, int const oldvalue, int const newvalue)
-{
-	lnode *target = NULL;
-	uint index = 2;
-	target = findElement(head_ref, oldvalue, &index);
-	if (target) {
-		target->data = newvalue;
-	} else {
-		printf("---cannot find %d---\n", oldvalue);
-	}
-
-}
-
 // Append new element 'new_data' at list's tail
-bool appendElement(lnode *head_ref, int const new_data)
+bool append(lnode *head_ref, int const new_data)
 {
 	bool flag = false;
 	lnode *worker = NULL;
@@ -254,13 +246,27 @@ bool appendElement(lnode *head_ref, int const new_data)
 	return flag;
 }
 
+// Find first match node which data equals to oldvalue and change its data to newvalue
+void setElement(lnode const *head_ref, int const oldvalue, int const newvalue)
+{
+	lnode *target = NULL;
+	uint index = 2;
+	target = locate(head_ref, oldvalue, &index);
+	if (target) {
+		target->data = newvalue;
+	} else {
+		printf("---cannot find %d---\n", oldvalue);
+	}
+
+}
+
 // prev->newnode->before(target)
 bool insertBefore(lnode *head_ref, int const before, int const new_data)
 {
 	bool flag = false;
 	lnode *target = NULL, *prev = NULL, *newnode = NULL;
 	uint index = 0;
-	target = findElement(head_ref, before, &index);	
+	target = locate(head_ref, before, &index);	
 	prev = getPrev(head_ref, target);
 	newnode = newNode(new_data);
 	newnode->pnext = target;
@@ -276,7 +282,7 @@ bool insertAfter(lnode *head_ref, int const after, int const new_data)
 	bool flag = false;
 	lnode *target = NULL, *newnode = NULL;
 	uint index = 0;	
-	target = findElement(head_ref, after, &index);
+	target = locate(head_ref, after, &index);
 	newnode = newNode(new_data);
 	newnode->pnext = target->pnext;
 	target->pnext = newnode;
@@ -286,33 +292,48 @@ bool insertAfter(lnode *head_ref, int const after, int const new_data)
 }
 
 // Delete first match node which data field equals to value
-bool deleteElement(lnode *head_ref, int const value)
+bool removeElement(lnode *head_ptr, int const value)
 {
-	bool flag = false;
-	lnode *target = NULL, *prev = NULL,*curr = NULL;
-	uint i = 1;
-	if(head_ref->data < 2) {
-		return flag;
+	if (NULL == head_ptr || NULL == head_ptr->pnext) {
+		return false;
 	}
-	prev = head_ref;
-	curr = prev->pnext;
-	while(curr && (i <= UINT_MAX)) {
-		if(curr->data == value) {
-			target = curr;
-			prev->pnext = target->pnext;
-			free(target);
-			head_ref->data--;
-			flag = true;
-			i++;		
-			break;
-		} else {
-			if(NULL == curr->pnext) 
-				break;
-			curr = curr->pnext;
-			prev = prev->pnext;
+	lnode *worker = head_ptr;
+	/* Go to the node for which the node next to it has to be deleted */
+	while(worker->pnext != NULL && ((worker->pnext)->data != value)) {
+		worker = worker->pnext;
+	}
+	if(worker->pnext == NULL || (worker->pnext)->data != value) {
+		printf("Element %d is not present in the list\n",value);
+		return false;
+	}
+	/* Now head_ptr points to a node and the node next to it has to be removeElementd */
+	lnode *temp = NULL;
+	temp = worker->pnext;
+	/*temp points to the node which has to be removeElementd*/
+	worker->pnext = temp->pnext;
+	/*We remove the node which is next to the head_ptr (which is also temp) */
+	free(temp);
+	/* Beacuse we deleted the node, we no longer require the memory used for it . 
+	free() will deallocate the memory.
+	*/		
+	return true;
+}
+
+int find(lnode *head_ptr, int key)
+{
+	int index = 0;
+	lnode *worker = NULL;	
+	worker = head_ptr->pnext; //First node is dummy node.
+	/* Iterate through the entire linked list and search for the key. */
+	while(worker != NULL) {
+		if(worker->data == key) { //key is found.
+			return index;
 		}
-	}		
-	return flag;
+		worker = worker->pnext;//Search in the next node.
+		index++;
+	}
+	/*Key is not found */
+	return -1;
 }
 
 int main(int argc, char const *argv[])
@@ -324,39 +345,45 @@ int main(int argc, char const *argv[])
     // lnode *testnode = NULL;
     list = createlinkedlist();
     // printf("list= %p; &list= %p; *(&list)= %p; sizeof(**(&list))= %d\n", list, &list, *(&list), sizeof(**(&list)));
-    // printAllElements(list);
-    appendElement(list, 222);
-    appendElement(list, 111);
+    // printDetails(list);
+    append(list, 222);
+    append(list, 111);
     // insertBefore(list, 111, 110);
     // insertAfter(list, 111, 112);
-    appendElement(list, 888);
-    appendElement(list, 555);
-    appendElement(list, 101);
+    append(list, 888);
+    append(list, 555);
+    append(list, 101);
     setElement(list, 101, 109);
+    // removeElement(list, 109);
+    removeElement(list, 109);
+    if(find(list, 109) < 0)
+    	printf("Not found !\n");
+    removeElement(list, 109);
+
     // setElement(list, 999, 109); // not exist
-    // printByGraphic(list);
+    // printBrief(list);
 
 /*    	printf("cplist before copying:\t");
-    printByGraphic(cplist);
+    printBrief(cplist);
     	printf("list before sorting:\t");
-    printByGraphic(list);
+    printBrief(list);
     copyList(list, &cplist);
     sortList(list);
         printf("cplist after copying:\t");
-    printByGraphic(cplist);
+    printBrief(cplist);
     	printf("list after sorting:\t");
-    printByGraphic(list);*/
+    printBrief(list);*/
 
-    concatList(&list, &cplist);
+    concat(&list, &cplist);
         printf("cplist after concating:\t");
-    printByGraphic(cplist);
+    printBrief(cplist);
     	printf("list after concating:\t");
-    printByGraphic(list);
+    printBrief(list);
 
 
 /*    printf("Please enter the search number: ");
     scanf("%d", &value_to_find);
-    findnode = findElement(list, value_to_find, &index);
+    findnode = locate(list, value_to_find, &index);
     if(NULL == findnode)
     {
     	printf("not found.\n");
@@ -365,7 +392,7 @@ int main(int argc, char const *argv[])
     }*/
 /*	printf("Please enter the delete number: ");
     scanf("%d", &value_to_delete);
-    if(true == deleteElement(list, value_to_delete)) {
+    if(true == removeElement(list, value_to_delete)) {
     	printf("delete complete.\n");
     } else {
     	printf("not found.\n");
@@ -373,9 +400,9 @@ int main(int argc, char const *argv[])
     // testnode = getPrev(list, list->pnext->pnext);
     // printf("[data] = %d\n", testnode->data);
     // printf("(int *)&(list->data)= %p; *((int *)&(list->data))= %d;\n", (int *)&(list->data), *((int *)&(list->data)));
-    // printAllElements(list);
-    // printByGraphic(list);
-    deleteList(list);
-    deleteList(cplist);
+    // printDetails(list);
+    // printBrief(list);
+    destroyList(list);
+    destroyList(cplist);
     return 0;
 }
